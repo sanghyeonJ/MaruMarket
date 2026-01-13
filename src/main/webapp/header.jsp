@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>MARUMARKET</title>
+<link rel="icon" type="image/png" sizes="16x16"  href="/images/favicon.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
 <link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.cookie.min.js"></script>
