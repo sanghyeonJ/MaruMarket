@@ -82,9 +82,7 @@
     <!-- 설명 -->
     <div class="detailContent">
       <h3>商品説明</h3>
-      <p>
-        ${product.content}
-      </p>
+      <p>${product.content}</p>
     </div>
 
   </div>
