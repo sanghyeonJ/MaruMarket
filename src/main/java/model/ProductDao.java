@@ -69,23 +69,29 @@ public class ProductDao {
             pstmt.close();
 
             /* 2️⃣ 대표 이미지 파일 등록 */
-            String fileSql = "INSERT INTO file_info ( " + "file_id, origin_name, save_name, file_path, file_size "
-                    + ") VALUES ( " + "file_info_seq.NEXTVAL, ?, ?, ?, ? )";
-
-            pstmt = conn.prepareStatement(fileSql);
+            String fileSql = "INSERT INTO file_info (file_id, origin_name, save_name, file_path, file_size) VALUES (file_info_seq.NEXTVAL, ?, ?, ?, ?)";
+            // 👈 PreparedStatement를 만들 때 자동 생성 키를 받겠다고 설정합니다.
+            pstmt = conn.prepareStatement(fileSql, new String[] { "FILE_ID" }); 
             pstmt.setString(1, mainFile.getOriginName());
             pstmt.setString(2, mainFile.getSaveName());
             pstmt.setString(3, mainFile.getFilePath());
             pstmt.setLong(4, mainFile.getFileSize());
             pstmt.executeUpdate();
+
+            // 👈 방금 들어간 file_id를 가져옵니다.
+            int mainFileId = 0;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                mainFileId = rs.getInt(1);
+            }
+            rs.close();
             pstmt.close();
 
-            /* 3️⃣ 상품-파일 연결 (대표 이미지) */
-            String pfSql = "INSERT INTO product_file ( "
-                    + "product_file_id, product_id, file_id, file_type, sort_order " + ") VALUES ( "
-                    + "product_file_seq.NEXTVAL, product_seq.CURRVAL, file_seq.CURRVAL, 'MAIN', 1 )";
-
+            /* 3️⃣ 상품-파일 연결 */
+            // 👈 이제 CURRVAL 대신 위에서 받아온 mainFileId 변수를 직접 넣습니다.
+            String pfSql = "INSERT INTO product_file (product_file_id, product_id, file_id, file_type, sort_order) VALUES (product_file_seq.NEXTVAL, product_seq.CURRVAL, ?, 'MAIN', 1)";
             pstmt = conn.prepareStatement(pfSql);
+            pstmt.setInt(1, mainFileId);
             pstmt.executeUpdate();
             pstmt.close();
 
@@ -93,21 +99,32 @@ public class ProductDao {
             if (detailFiles != null) {
                 int order = 1;
                 for (FileDto file : detailFiles) {
-
-                    // file_info insert
-                    pstmt = conn.prepareStatement(fileSql);
+                    // A. file_info에 상세 이미지 저장
+                    // (주의: file_info_seq.NEXTVAL을 사용하고, 생성된 키를 받겠다고 설정)
+                    pstmt = conn.prepareStatement(fileSql, new String[] { "FILE_ID" });
                     pstmt.setString(1, file.getOriginName());
                     pstmt.setString(2, file.getSaveName());
                     pstmt.setString(3, file.getFilePath());
                     pstmt.setLong(4, file.getFileSize());
                     pstmt.executeUpdate();
+
+                    // B. 방금 저장된 상세 이미지의 file_id 가져오기
+                    int detailFileId = 0;
+                    ResultSet rsDetail = pstmt.getGeneratedKeys();
+                    if (rsDetail.next()) {
+                        detailFileId = rsDetail.getInt(1);
+                    }
+                    rsDetail.close();
                     pstmt.close();
 
-                    // product_file insert
-                    pstmt = conn.prepareStatement("INSERT INTO product_file ( "
-                            + "product_file_id, product_id, file_id, file_type, sort_order " + ") VALUES ( "
-                            + "product_file_seq.NEXTVAL, product_seq.CURRVAL, file_seq.CURRVAL, 'DETAIL', ? )");
-                    pstmt.setInt(1, order++);
+                    // C. product_file 테이블에 연결 (위에서 받은 detailFileId 사용)
+                    String insDetailPfSql = "INSERT INTO product_file ( "
+                            + "product_file_id, product_id, file_id, file_type, sort_order " 
+                            + ") VALUES ( product_file_seq.NEXTVAL, product_seq.CURRVAL, ?, 'DETAIL', ? )";
+                    
+                    pstmt = conn.prepareStatement(insDetailPfSql);
+                    pstmt.setInt(1, detailFileId); // 방금 뽑은 상세 이미지 번호
+                    pstmt.setInt(2, order++);      // 순서 (1, 2, 3...)
                     pstmt.executeUpdate();
                     pstmt.close();
                 }
