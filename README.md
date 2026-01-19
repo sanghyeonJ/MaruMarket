@@ -4,7 +4,7 @@
 ---
 
 ### 🛠 Tech Stack (技術スタック)
-- **Language**: Java 11 (JDK 8+)
+- **Language**: Java 1７
 - **Server**: Apache Tomcat 9.0
 - **Database**: Oracle DB (XE)
 - **Frontend**: JSP, HTML5, CSS3, JavaScript, jQuery
