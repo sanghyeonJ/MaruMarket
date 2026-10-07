@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 370" font-family="'Noto Sans JP', 'Roboto', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#00A3E0"/>
+    </marker>
+  </defs>
+
+  <!-- Client -->
+  <rect x="120" y="8" width="160" height="46" rx="6" fill="#FFFFFF" stroke="#003366" stroke-width="2"/>
+  <text x="200" y="30" text-anchor="middle" font-size="15" font-weight="700" fill="#003366">Browser</text>
+  <text x="200" y="46" text-anchor="middle" font-size="10" fill="#666666">jQuery / AJAX</text>
+
+  <!-- Controller -->
+  <rect x="20" y="100" width="170" height="58" rx="6" fill="#003366"/>
+  <text x="105" y="124" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">Controller</text>
+  <text x="105" y="143" text-anchor="middle" font-size="10" fill="#CFE3F5">Servlet (*Controller)</text>
+
+  <!-- View -->
+  <rect x="230" y="100" width="150" height="58" rx="6" fill="#00A3E0"/>
+  <text x="305" y="124" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">View</text>
+  <text x="305" y="143" text-anchor="middle" font-size="10" fill="#FFFFFF">JSP / JSTL</text>
+
+  <!-- Service -->
+  <rect x="20" y="200" width="170" height="58" rx="6" fill="#FFFFFF" stroke="#003366" stroke-width="2"/>
+  <text x="105" y="224" text-anchor="middle" font-size="15" font-weight="700" fill="#003366">Service</text>
+  <text x="105" y="243" text-anchor="middle" font-size="10" fill="#666666">Command 인터페이스</text>
+
+  <!-- Model -->
+  <rect x="20" y="300" width="170" height="58" rx="6" fill="#FFFFFF" stroke="#003366" stroke-width="2"/>
+  <text x="105" y="324" text-anchor="middle" font-size="15" font-weight="700" fill="#003366">Model</text>
+  <text x="105" y="343" text-anchor="middle" font-size="10" fill="#666666">DAO / DTO</text>
+
+  <!-- DB -->
+  <path d="M240,308 a65,10 0 0,0 130,0 v42 a65,10 0 0,1 -130,0 z" fill="#F0F4F8" stroke="#003366" stroke-width="2"/>
+  <ellipse cx="305" cy="308" rx="65" ry="10" fill="#FFFFFF" stroke="#003366" stroke-width="2"/>
+  <text x="305" y="340" text-anchor="middle" font-size="14" font-weight="700" fill="#003366">Oracle DB</text>
+
+  <!-- Arrows -->
+  <g stroke="#00A3E0" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M150,54 L110,98"/>
+    <path d="M305,100 L252,56"/>
+    <path d="M190,129 L228,129"/>
+    <path d="M105,158 L105,198"/>
+    <path d="M105,258 L105,298"/>
+    <path d="M192,329 L238,329" marker-start="url(#arrow)"/>
+  </g>
+
+  <!-- Labels -->
+  <g font-size="10" fill="#333333">
+    <text x="92" y="76" text-anchor="middle">Request</text>
+    <text x="318" y="76" text-anchor="middle">Response</text>
+    <text x="210" y="121" text-anchor="middle">forward</text>
+    <text x="113" y="182">execute()</text>
+    <text x="113" y="282">호출</text>
+    <text x="215" y="321" text-anchor="middle">JDBC</text>
+  </g>
+</svg>
